@@ -15,7 +15,7 @@ class VsjApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.teal,
       ),
-      home: First(),
+      home: const First(),
     );
   }
 }
@@ -25,44 +25,52 @@ class First extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final IncrementDecrementController controller =
+        Get.put(IncrementDecrementController());
     return Scaffold(
-      appBar: AppBar(
-        title: Text("Getx Demo"),
-        centerTitle: true,
-      ),
-      body: Center(
-        child: Column(
-          children: [
-            GetBuilder<Controller>(
-              init: Controller(),
-              builder: (_) => Text("No of Clicks : ${_.count}"),
-            ),
-            ElevatedButton(
-                onPressed: () {
-                  Get.find<Controller>().decreament();
-                },
-                child: Text('-'))
-          ],
+        appBar: AppBar(
+          title: Obx(() => Text("Getx: ${controller.count}")),
+          centerTitle: true,
         ),
-      ),
-      floatingActionButton: FloatingActionButton(
-        child: Icon(Icons.add),
-        onPressed: () {
-          Get.find<Controller>().increment();
-        },
-      ),
-    );
+        body: Center(
+          child: Column(
+            children: [
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: ElevatedButton(
+                    onPressed: () {
+                      Get.find<IncrementDecrementController>().decrement();
+                    },
+                    child: Obx(() => Text("Clicks: ${controller.count}"))),
+              )
+            ],
+          ),
+        ),
+        floatingActionButton:
+            Row(mainAxisAlignment: MainAxisAlignment.end, children: [
+          FloatingActionButton(
+            onPressed: () =>
+                {Get.find<IncrementDecrementController>().decrement()},
+            child: Icon(Icons.navigate_before_rounded),
+          ),
+          FloatingActionButton(
+            onPressed: () =>
+                {Get.find<IncrementDecrementController>().increment()},
+            child: Icon(Icons.navigate_next_rounded),
+            heroTag: "fab2",
+          ),
+        ]));
   }
 }
 
-class Controller extends GetxController {
-  int count = 0;
+class IncrementDecrementController extends GetxController {
+  var count = 0.obs;
   void increment() {
     count++;
     update();
   }
 
-  void decreament() {
+  void decrement() {
     count--;
     update();
   }
