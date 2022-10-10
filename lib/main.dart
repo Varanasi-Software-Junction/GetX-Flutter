@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import 'incrementdecrementcontroller.dart';
+
 void main() {
   runApp(const VsjApp());
 }
@@ -29,7 +31,10 @@ class First extends StatelessWidget {
         Get.put(IncrementDecrementController());
     return Scaffold(
         appBar: AppBar(
-          title: Obx(() => Text("Getx: ${controller.count}")),
+          title: Obx(() => Text("Getx: ${controller.count}",
+              style: TextStyle(
+                  backgroundColor:
+                      controller.colors[controller.colorno.toInt()]))),
           centerTitle: true,
         ),
         body: Center(
@@ -60,18 +65,5 @@ class First extends StatelessWidget {
             heroTag: "fab2",
           ),
         ]));
-  }
-}
-
-class IncrementDecrementController extends GetxController {
-  var count = 0.obs;
-  void increment() {
-    count++;
-    update();
-  }
-
-  void decrement() {
-    count--;
-    update();
   }
 }
