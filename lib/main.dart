@@ -15,14 +15,7 @@ class VsjApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.teal,
       ),
-      //home: const MyHomePage(title: 'Flutter Demo Home Page'),
-      initialRoute: "/home",
-      getPages: [
-        GetPage(
-          name: '/home',
-          page: () => First(),
-        ),
-      ],
+      home: First(),
     );
   }
 }
@@ -40,11 +33,15 @@ class First extends StatelessWidget {
       body: Center(
         child: Column(
           children: [
-
             GetBuilder<Controller>(
               init: Controller(),
               builder: (_) => Text("No of Clicks : ${_.count}"),
             ),
+            ElevatedButton(
+                onPressed: () {
+                  Get.find<Controller>().decreament();
+                },
+                child: Text('-'))
           ],
         ),
       ),
@@ -62,6 +59,11 @@ class Controller extends GetxController {
   int count = 0;
   void increment() {
     count++;
+    update();
+  }
+
+  void decreament() {
+    count--;
     update();
   }
 }
