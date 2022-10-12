@@ -31,7 +31,6 @@ class First extends StatelessWidget {
         Get.put(IncrementDecrementController());
     return Scaffold(
         appBar: AppBar(
-
           title: Obx(() => Text("Getx: ${controller.count}",
               style: TextStyle(
                   backgroundColor:
@@ -42,9 +41,10 @@ class First extends StatelessWidget {
           child: Column(
             children: [
               Obx(() => Text('Switch Setting: ${controller.boolvalue}')),
-              Obx(() => Switch(
-                  onChanged: (val) => controller.toggle(),
-                  value: controller.boolvalue.value),
+              Obx(
+                () => Switch(
+                    onChanged: (val) => controller.toggle(),
+                    value: controller.boolvalue.value),
               ),
               Padding(
                 padding: const EdgeInsets.all(8.0),
